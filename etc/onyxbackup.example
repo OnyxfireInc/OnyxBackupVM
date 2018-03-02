@@ -1,0 +1,46 @@
+[xenserver]
+
+##### Configure core settings #####
+
+# Type of share backup_dir is on ( currently supports nfs and smb )
+# NOTE: Path seperators will be automatically switched ( / vs \ )
+share_type = nfs
+
+# Directory where data will be backed up to
+backup_dir = /mnt/onyxbackup-xs/exports
+
+# Minimum percentage of space remaining for backup_dir before backups
+# are prevented
+space_threshold = 20
+
+# Maximum number of previous backups to keep for each VM/VDI
+max_backups = 4
+
+# Enable compression during export (vm-exports only, True/False)
+compress = False
+
+# Format for vdi exports (supports raw or vhd)
+vdi_export_format = raw
+
+# Backup pool DB to save VM metadata in case of corruption or disaster (True/False)
+pool_backup = False
+
+# Backup dom0 in case of disaster (True/False)
+host_backup = False
+
+##### VM selections #####
+
+# Exclude VMs from vdi-export or vm-export (comma separated list of VM names or regex)
+excludes = DEV-.*, my-vm-one
+
+### vdi-export ###
+
+# Export VDI but select specific disks for 2 VMs (Disks are semi-colon(;) separated)
+# NOTE: max_backups must be specified in order to specify disks to backup, however,
+# -1 in place of max_backups leaves default setting if desired
+vdi_exports = my-vm-one:-1:xvda;xvdb,my-vm-two:5:xvdb,PRD-LNXVM.*
+
+### vm-export example ###
+
+# Export entire VMs but override one VM's max_backups setting to 2
+vm_exports = my-vm-one:2,my-vm-two,PRD-.*
