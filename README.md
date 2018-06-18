@@ -154,43 +154,19 @@ Note that there are numerous combinations that may possibly conflict with each o
 
 ### Common cronjob examples
 
-Run backup once a week with no email report  
+Run backup once a week 
 `10 0 * * 6 <onyxbackup-xs path>/onyxbackup-xs.py >/dev/null 2>&1`
 
-Run backup once a week and let cron send email report on every run  
-`10 0 * * 6 <onyxbackup-xs path>/onyxbackup-xs.py`
+Run backup once a week
+`10 0 * * 6 <onyxbackup-xs path>/onyxbackup-xs.py >/dev/null 2>&1`
 
-Run backup once a week and let cron send email only if there are warnings or errors  
-`10 0 * * 6 <onyxbackup-xs path>/onyxbackup-xs.py -l warning`
+Run backup once a week and only log warnings and above
+`10 0 * * 6 <onyxbackup-xs path>/onyxbackup-xs.py -l warning >/dev/null 2>&1`
 
-Run backup of all VMs nightly and backup pool metadata and hosts weekly with full report emailed by cron  
+Run backup of all VMs nightly and backup pool metadata and hosts weekly
 ```
-  10 0 * * * <onyxbackup-xs path>/onyxbackup-xs.py
-  10 0 * * 6 <onyxbackup-xs path>/onyxbackup-xs.py -x '.*' -p -H
-```
-
-#### Configuring sSMTP on XenServer to send you emails
-XenServer uses sSMTP to send emails from the system for both XenServer alerts configured and system emails like from cron jobs
-
-_/etc/ssmtp/ssmtp.conf_
-```
-# Route system emails bound for root to go to your email address
-root=<your email address>
-# Username and password (uncomment if required by mail server)
-#authUser=username
-#authPass=password
-# Mail server and port to send emails to
-mailhub=<dns-name or ip>:<port>
-# Your intranet/internet domain from which you send emails (i.e. mycompany.com)
-RewriteDomain=<your-domain>
-# The following three lines can be uncommented to allow you to encrypt the emails and authentication when
-# sending emails from XenServer if supported by the mail server
-#UseTLS=YES
-#UseSTARTTLS=YES
-#TLS_CA_File=/etc/pki/tls/certs/ca-bundle.crt
-# Uncomment the below line if you wish to see DEBUG logging of the email system in the system logs to
-# troubleshoot issues
-#Debug=YES
+  10 0 * * * <onyxbackup-xs path>/onyxbackup-xs.py >/dev/null 2>&1
+  10 0 * * 6 <onyxbackup-xs path>/onyxbackup-xs.py -x '.*' -p -H >/dev/null 2>&1
 ```
 
 ### VM selection and max_backups operations

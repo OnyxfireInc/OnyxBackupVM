@@ -16,6 +16,13 @@
       "formatter": "simple",
       "stream": "ext://sys.stdout"
     },
+    "report": {
+      "class": "logging.FileHandler",
+      "formatter": "simple",
+      "filename": "{}/logs/backup.rpt".format(self._base_dir),
+      "mode": "w",
+      "encoding": "utf8"
+    },
     "file": {
       "class": "logging.handlers.RotatingFileHandler",
       "level": "WARNING",
@@ -38,7 +45,7 @@
   "loggers": {
     "onyxbackup": {
       "level": "INFO",
-      "handlers": ["console", "file", "debug"],
+      "handlers": ["console", "report", "file", "debug"],
       "propagate": 0
     }
   },

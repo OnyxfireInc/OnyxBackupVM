@@ -26,7 +26,7 @@ import logging
 from json import load
 from logging.config import dictConfig
 from os import getenv
-from os.path import exists, expanduser, abspath, dirname
+from os.path import abspath, dirname, exists, expanduser, join
 from sys import argv
 import onyxbackup.util as util
 
@@ -43,13 +43,23 @@ class Configurator(object):
 		conf_parser = ConfigParser.SafeConfigParser()
 		conf_parser.add_section('xenserver')
 		conf_parser.set('xenserver', 'share_type', 'nfs')
-		conf_parser.set('xenserver', 'backup_dir', '{}/exports'.format(self._base_dir))
+		conf_parser.set('xenserver', 'backup_dir', join(self._base_dir, 'exports'))
 		conf_parser.set('xenserver', 'space_threshold', '20')
 		conf_parser.set('xenserver', 'max_backups', '4')
 		conf_parser.set('xenserver', 'compress', 'False')
 		conf_parser.set('xenserver', 'vdi_export_format', 'raw')
 		conf_parser.set('xenserver', 'pool_backup', 'False')
 		conf_parser.set('xenserver', 'host_backup', 'False')
+		conf_parser.add_section('smtp')
+		conf_parser.set('smtp', 'smtp_enabled', 'false')
+		conf_parser.set('smtp', 'smtp_file', join(self._base_dir, 'logs', 'backup.rpt'))
+		conf_parser.set('smtp', 'smtp_server', 'localhost')
+		conf_parser.set('smtp', 'smtp_port', '25')
+		conf_parser.set('smtp', 'smtp_hostname', 'xenserver')
+		conf_parser.set('smtp', 'smtp_timeout', '15')
+		conf_parser.set('smtp', 'smtp_subject', 'OnyxBackup - VM Backup Report')
+		conf_parser.set('smtp', 'smtp_from', 'xenserver@localhost')
+		conf_parser.set('smtp', 'smtp_to', 'you@example.com')
 		self.logger.debug('(i) Reading updates to config from configuration files')
 		conf_parser.read(['{}/etc/onyxbackup.cfg'.format(self._base_dir), '/etc/onyxbackup.cfg', expanduser('~/onyxbackup.cfg')])
 		if args.config:
@@ -105,6 +115,15 @@ class Configurator(object):
 		options['vm_exports'] = parser.get('xenserver', 'vm_exports').split(',') if parser.has_option('xenserver', 'vm_exports') else []
 		options['vdi_exports'] = parser.get('xenserver', 'vdi_exports').split(',') if parser.has_option('xenserver', 'vdi_exports') else []
 		options['excludes'] = parser.get('xenserver', 'excludes').split(',') if parser.has_option('xenserver', 'excludes') else []
+		options['smtp_enabled'] = parser.getboolean('smtp', 'smtp_enabled')
+		options['smtp_file'] = parser.get('smtp', 'smtp_file')
+		options['smtp_server'] = parser.get('smtp', 'smtp_server')
+		options['smtp_port'] = parser.getint('smtp', 'smtp_port')
+		options['smtp_hostname'] = parser.get('smtp', 'smtp_hostname')
+		options['smtp_timeout'] = parser.getint('smtp', 'smtp_timeout')
+		options['smtp_subject'] = parser.get('smtp', 'smtp_subject')
+		options['smtp_from'] = parser.get('smtp', 'smtp_from')
+		options['smtp_to'] = parser.get('smtp', 'smtp_to')
 		return options
 
 	def _setup_logging(self, args):
@@ -139,11 +158,18 @@ class Configurator(object):
 					"formatter": "simple",
 					"stream": "ext://sys.stdout"
 				},
+				"report": {
+					"class": "logging.FileHandler",
+					"formatter": "simple",
+					"filename": join(self._base_dir, 'logs', 'backup.rpt'),
+					"mode": "w",
+					"encoding": "utf8"
+				},
 				"file": {
 					"class": "logging.handlers.RotatingFileHandler",
 					"level": "WARNING",
 					"formatter": "detailed",
-					"filename": "{}/logs/onyxbackup-xs.log".format(self._base_dir),
+					"filename": join(self._base_dir, 'logs', 'onyxbackup-xs.log'),
 					"maxBytes": 10485760,
 					"backupCount": 20,
 					"encoding": "utf8"
@@ -152,7 +178,7 @@ class Configurator(object):
 					"class": "logging.handlers.RotatingFileHandler",
 					"level": "DEBUG",
 					"formatter": "detailed",
-					"filename": "{}/logs/debug.log".format(self._base_dir),
+					"filename": join(self._base_dir, 'logs', 'debug.log'),
 					"maxBytes": 10485760,
 					"backupCount": 20,
 					"encoding": "utf8"
@@ -161,7 +187,7 @@ class Configurator(object):
 			"loggers": {
 				"onyxbackup": {
 					"level": log_level,
-					"handlers": ["console", "file", "debug"],
+					"handlers": ["console", "report", "file", "debug"],
 					"propagate": 0
 				}
 			},
@@ -171,7 +197,7 @@ class Configurator(object):
 			}
 		}
 
-		cfg_file = '{}/etc/logging.json'.format(self._base_dir)
+		cfg_file = join(self._base_dir, 'etc', 'logging.json')
 		value = getenv('LOG_CFG', None)
 		if value:
 			self.logger.debug('(i) -> Logging config environment variable set: {}'.format(value))

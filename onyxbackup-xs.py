@@ -71,6 +71,9 @@ class Cli(object):
 				print('')
 
 			self._end_run()
+			
+			if self.config['smtp_enabled']:
+				xenService.send_email()
 		except Exception as e:
 			self.logger.critical('Fatal Exception: {}'.format(str(e)))
 			self._end_run(1)
@@ -107,6 +110,16 @@ class Cli(object):
 		self._print_vm_list('excludes', self.config['excludes'])
 		self._print_vm_list('vdi-exports', self.config['vdi_exports'])
 		self._print_vm_list('vm-exports', self.config['vm_exports'])
+		if self.config['smtp_enabled']:
+			self.logger.info('')
+			self.logger.info('  ****** SMTP ******')
+			self.logger.info('  smtp_server       = {}'.format(self.config['smtp_server']))
+			self.logger.info('  smtp_port         = {}'.format(self.config['smtp_port']))
+			self.logger.info('  smtp_hostname     = {}'.format(self.config['smtp_hostname']))
+			self.logger.info('  smtp_timeout      = {}'.format(self.config['smtp_timeout']))
+			self.logger.info('  smtp_subject      = {}'.format(self.config['smtp_subject']))
+			self.logger.info('  smtp_from         = {}'.format(self.config['smtp_from']))
+			self.logger.info('  smtp_to           = {}'.format(self.config['smtp_to']))
 
 	def _print_vm_list(self, type, vms):
 		self.logger.info('  {} (count) = {}'.format(type, len(vms)))

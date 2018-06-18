@@ -44,3 +44,13 @@ vdi_exports = my-vm-one:-1:xvda;xvdb,my-vm-two:5:xvdb,PRD-LNXVM.*
 
 # Export entire VMs but override one VM's max_backups setting to 2
 vm_exports = my-vm-one:2,my-vm-two,PRD-.*
+
+[smtp]
+smtp_enabled = false
+smtp_server = localhost
+smtp_port = 25
+smtp_hostname = xenserver
+smtp_timeout = 15
+smtp_subject = OnyxBackup - VM Backup Report
+smtp_from = xenserver@localhost
+smtp_to = you@example.com

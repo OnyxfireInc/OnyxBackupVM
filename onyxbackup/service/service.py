@@ -622,6 +622,30 @@ class XenApiService(object):
 		vm_lists['vm_exports'] = self.config['vm_exports']
 		self._validate_vm_lists(vm_lists)
 
+	def send_email(self):
+		import smtplib
+		from email.mime.text import MIMEText
+
+		smtp_file = self.config['smtp_file']
+		smtp_server = self.config['smtp_server']
+		smtp_port = self.config['smtp_port']
+		smtp_hostname = self.config['smtp_hostname']
+		smtp_timeout = self.config['smtp_timeout']
+		smtp_subject = self.config['smtp_subject']
+		smtp_from = self.config['smtp_from']
+		smtp_to = self.config['smtp_to']
+
+		with open(smtp_file) as fp:
+			msg = MIMEText(fp.read())
+
+		msg['Subject'] = smtp_subject
+		msg['From'] = smtp_from
+		msg['To'] = smtp_to
+
+		s = smtplib.SMTP(smtp_server,smtp_port,smtp_hostname,smtp_timeout)
+		s.send_message(msg)
+		s.quit()
+
 	# Private Functions
 
 	def _get_all_hosts(self, as_list=True):
