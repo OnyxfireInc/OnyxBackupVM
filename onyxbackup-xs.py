@@ -74,16 +74,17 @@ class Cli(object):
 			
 			if self.config['smtp_enabled']:
 				xenService.send_email()
+			exit(0)
 		except Exception as e:
 			self.logger.critical('Fatal Exception: {}'.format(str(e)))
-			self._end_run(1)
+			self._end_run()
+			exit(1)
 
 	# Private Functions
 
-	def _end_run(self, exitCode=0):
+	def _end_run(self):
 		self.logger.info('---------------------------------------------------------')
 		self.logger.info('Ended: {}'.format(self._get_date_string()))
-		exit(exitCode)
 
 	def _get_date_string(self, date=''):
 		if date == '':
