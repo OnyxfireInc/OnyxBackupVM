@@ -50,6 +50,7 @@ smtp_enabled = false
 smtp_auth = false
 smtp_user = username
 smtp_pass = password
+smtp_starttls = false
 smtp_server = localhost
 smtp_port = 25
 smtp_hostname = xenserver

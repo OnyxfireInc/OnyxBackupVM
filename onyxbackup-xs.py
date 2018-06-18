@@ -115,8 +115,10 @@ class Cli(object):
 		if self.config['smtp_enabled']:
 			print('')
 			self.logger.info('  ****** SMTP ******')
-			self.logger.info('  smtp_auth         = {}'.format(self.config['smtp_auth']))
-			self.logger.info('  smtp_user         = {}'.format(self.config['smtp_user']))
+			if self.config['smtp_auth']:
+				self.logger.info('  smtp_auth         = {}'.format(self.config['smtp_auth']))
+				self.logger.info('  smtp_user         = {}'.format(self.config['smtp_user']))
+			self.logger.info('  smtp_starttls     = {}'.format(self.config['smtp_starttls']))
 			self.logger.info('  smtp_server       = {}'.format(self.config['smtp_server']))
 			self.logger.info('  smtp_port         = {}'.format(self.config['smtp_port']))
 			self.logger.info('  smtp_hostname     = {}'.format(self.config['smtp_hostname']))
@@ -135,7 +137,7 @@ class Cli(object):
 		self.logger.info('  {}: {}'.format(type, str))
 
 	def _setup(self):
-		version = '1.0.1'
+		version = '1.1.0'
 		current_year = datetime.datetime.now().year
 		copyright = 'Copyright (C) {}  OnyxFire, Inc. <https://onyxfireinc.com>'.format(current_year)
 		program_title = 'OnyxBackup for XenServer {}'.format(version)

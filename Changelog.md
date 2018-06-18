@@ -1,5 +1,11 @@
 # Changelog for OnyxBackup-XS
 
+## v1.1.0 - ?? June 2018
+  ### New Features
+  - Added config option to enable/disable starttls for smtp
+  ### Config Changes
+  - For compatibility reasons, starttls is now disabled by default. If you wish to encrypt your emails outbound simply override the default in your config file.
+
 ## v1.0.1 - 18 June 2018
   ### New Features
   - Added built-in SMTP support for email reports
