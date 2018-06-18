@@ -134,7 +134,7 @@ class Cli(object):
 		self.logger.info('  {}: {}'.format(type, str))
 
 	def _setup(self):
-		version = '1.0.0'
+		version = '1.0.1'
 		current_year = datetime.datetime.now().year
 		copyright = 'Copyright (C) {}  OnyxFire, Inc. <https://onyxfireinc.com>'.format(current_year)
 		program_title = 'OnyxBackup for XenServer {}'.format(version)

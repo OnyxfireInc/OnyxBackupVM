@@ -645,9 +645,12 @@ class XenApiService(object):
 		msg['To'] = smtp_to
 
 		s = smtplib.SMTP(smtp_server,smtp_port,smtp_hostname,smtp_timeout)
+		s.ehlo()
+		s.starttls()
+		s.ehlo()
 		if self.config['smtp_auth']:
 			s.login(self.config['smtp_user'], self.config['smtp_pass'])
-		s.send_message(msg)
+		s.sendmail(smtp_from, [smtp_to], msg.as_string())
 		s.quit()
 
 	# Private Functions
