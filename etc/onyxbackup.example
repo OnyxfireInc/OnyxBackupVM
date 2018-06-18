@@ -47,6 +47,9 @@ vm_exports = my-vm-one:2,my-vm-two,PRD-.*
 
 [smtp]
 smtp_enabled = false
+smtp_auth = false
+smtp_user = username
+smtp_pass = password
 smtp_server = localhost
 smtp_port = 25
 smtp_hostname = xenserver

@@ -643,6 +643,8 @@ class XenApiService(object):
 		msg['To'] = smtp_to
 
 		s = smtplib.SMTP(smtp_server,smtp_port,smtp_hostname,smtp_timeout)
+		if self.config['smtp_auth']:
+			s.login(self.config['smtp_user'], self.config['smtp_pass'])
 		s.send_message(msg)
 		s.quit()
 
