@@ -55,7 +55,7 @@ class Configurator(object):
 		conf_parser.set('smtp', 'smtp_auth', 'false')
 		conf_parser.set('smtp', 'smtp_user', 'user')
 		conf_parser.set('smtp', 'smtp_pass', 'password')
-		conf.parser.set('smtp', 'smtp_starttls', 'false')
+		conf_parser.set('smtp', 'smtp_starttls', 'false')
 		conf_parser.set('smtp', 'smtp_file', join(self._base_dir, 'logs', 'backup.rpt'))
 		conf_parser.set('smtp', 'smtp_server', 'localhost')
 		conf_parser.set('smtp', 'smtp_port', '25')
