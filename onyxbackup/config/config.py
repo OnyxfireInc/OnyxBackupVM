@@ -123,7 +123,7 @@ class Configurator(object):
 		options['smtp_auth'] = parser.getboolean('smtp', 'smtp_auth')
 		options['smtp_user'] = parser.get('smtp', 'smtp_user')
 		options['smtp_pass'] = parser.get('smtp', 'smtp_pass')
-		options['smtp_starttls'] = parser.get('smtp', 'smtp_starttls')
+		options['smtp_starttls'] = parser.getboolean('smtp', 'smtp_starttls')
 		options['smtp_file'] = parser.get('smtp', 'smtp_file')
 		options['smtp_server'] = parser.get('smtp', 'smtp_server')
 		options['smtp_port'] = parser.getint('smtp', 'smtp_port')
