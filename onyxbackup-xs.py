@@ -111,8 +111,10 @@ class Cli(object):
 		self._print_vm_list('vdi-exports', self.config['vdi_exports'])
 		self._print_vm_list('vm-exports', self.config['vm_exports'])
 		if self.config['smtp_enabled']:
-			self.logger.info('')
+			print('')
 			self.logger.info('  ****** SMTP ******')
+			self.logger.info('  smtp_auth         = {}'.format(self.config['smtp_auth']))
+			self.logger.info('  smtp_user         = {}'.format(self.config['smtp_user']))
 			self.logger.info('  smtp_server       = {}'.format(self.config['smtp_server']))
 			self.logger.info('  smtp_port         = {}'.format(self.config['smtp_port']))
 			self.logger.info('  smtp_hostname     = {}'.format(self.config['smtp_hostname']))
