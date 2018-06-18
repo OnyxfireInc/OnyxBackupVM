@@ -1,5 +1,5 @@
 # [OnyxBackup-XS][OnyxBackup-XS]
-XenServer Backup
+XenServer/XCP-NG VM Backup
 
 ## Overview
  - The OnyxBackup-XS tool is run from a XenServer host and utilizes the native `xe vm-export` and `xe vdi-export` commands to backup both Linux and Windows VMs. 
@@ -154,13 +154,10 @@ Note that there are numerous combinations that may possibly conflict with each o
 
 ### Common cronjob examples
 
-Run backup once a week 
+Run backup once a week  
 `10 0 * * 6 <onyxbackup-xs path>/onyxbackup-xs.py >/dev/null 2>&1`
 
-Run backup once a week
-`10 0 * * 6 <onyxbackup-xs path>/onyxbackup-xs.py >/dev/null 2>&1`
-
-Run backup once a week and only log warnings and above
+Run backup once a week and only log warnings and above  
 `10 0 * * 6 <onyxbackup-xs path>/onyxbackup-xs.py -l warning >/dev/null 2>&1`
 
 Run backup of all VMs nightly and backup pool metadata and hosts weekly
