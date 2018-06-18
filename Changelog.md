@@ -1,7 +1,6 @@
 # Changelog for OnyxBackup-XS
 ### VM Backup for XenServer/XCP-NG
 
-## v1.1.0 - ?? June 2018
 ### v1.1.0 - ?? June 2018
   #### New Features
   - Added config option to enable/disable starttls for smtp
