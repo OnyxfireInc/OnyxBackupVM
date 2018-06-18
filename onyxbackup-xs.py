@@ -53,6 +53,7 @@ class Cli(object):
 				self._print_config()
 				print('')
 				self._end_run()
+				exit(0)
 
 			if self.config['host_backup']:
 				xenService.backup_hosts()
