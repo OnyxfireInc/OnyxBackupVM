@@ -635,6 +635,8 @@ class XenApiService(object):
 		smtp_from = self.config['smtp_from']
 		smtp_to = self.config['smtp_to']
 
+		self.logger.debug('(i) Sending email report to {}'.format(smtp_to))
+
 		with open(smtp_file) as fp:
 			msg = MIMEText(fp.read())
 
