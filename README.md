@@ -217,7 +217,7 @@ Copyright (C) 2018 OnyxFire, Inc. All rights reserved.
 This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License v3. See the [LICENSE][GPLv3] file for more information.
 
 ## Attribution
-This program was inspired by the great work of Northern Arizona University on [NAUBackup][NAUBackup]
+This program was inspired by the great work of Northern Arizona University IT Department on [NAUBackup][NAUBackup] but is a complete rewrite. As such, it has and will continue to evolve into something new.
 
 [OnyxBackup-XS]: https://github.com/OnyxfireInc/OnyxBackup-XS
 [GPLv3]: https://github.com/OnyxfireInc/onyxbackup-xs/blob/master/LICENSE
