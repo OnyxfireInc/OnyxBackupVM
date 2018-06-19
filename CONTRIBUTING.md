@@ -1,4 +1,4 @@
-Contributing to OnyxBackup-XS
+Contributing to OnyxBackupVM
 ========================
 
 Thanks for considering a pull request or issue report.  Below are a
@@ -14,8 +14,8 @@ as there may be workarounds or ideas available.
 
 When creating bug reports, please make sure you provide the following:
 
-* The current OnyxBackup-XS and/or XenServer version where the bug first appeared
-* The last OnyxBackup-XS and/or XenServer version where the bug did not exist
+* The current OnyxBackupVM and XenServer/XCP-NG version where the bug first appeared
+* The last OnyxBackupVM and XenServer/XCP-NG version where the bug did not exist
 * A list of repeatable steps to reproduce the bug
 
 When creating feature requests, please make sure you provide the following:

@@ -1,25 +1,23 @@
 #!/usr/bin/env python
 
-# OnyxBackup for XenServer
+# OnyxBackupVM
 # Copyright (c) 2018 OnyxFire, Inc.
-#
-# Permission is hereby granted, free of charge, to any person obtaining a copy
-# of this software and associated documentation files (the "Software"), to deal
-# in the Software without restriction, including without limitation the rights
-# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-# copies of the Software, and to permit persons to whom the Software is
-# furnished to do so, subject to the following conditions:
-#
+	
 # The above copyright notice and this permission notice shall be included in all
 # copies or substantial portions of the Software.
-#
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-# SOFTWARE.
+
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import argparse, datetime
 from logging import getLogger
@@ -41,7 +39,7 @@ class Cli(object):
 			xenService = service.XenApiService(self.config)
 			server_name = self._get_server_name()
 			self.logger.info('---------------------------------------------------------')
-			self.logger.info('OnyxBackup for XenServer running on {}'.format(server_name))
+			self.logger.info('OnyxBackupVM running on {}'.format(server_name))
 			self.logger.info('Started: {}'.format(self._get_date_string()))
 			self.logger.info('---------------------------------------------------------')
 			print('')
@@ -140,7 +138,7 @@ class Cli(object):
 		version = '1.1.0'
 		current_year = datetime.datetime.now().year
 		copyright = 'Copyright (C) {}  OnyxFire, Inc. <https://onyxfireinc.com>'.format(current_year)
-		program_title = 'OnyxBackup for XenServer {}'.format(version)
+		program_title = 'OnyxBackupVM {}'.format(version)
 		written_by = 'Written by: Lance Fogle (@lancefogle)'
 
 		parent_parser = argparse.ArgumentParser(add_help=False)
@@ -160,7 +158,7 @@ class Cli(object):
 		)
 		child_parser.set_defaults(**options)
 		child_parser.add_argument('-d', '--backup-dir', metavar='PATH',
-			help='Backups directory (Default: <OnyxBackup-XS Path>/exports)')
+			help='Backups directory (Default: <OnyxBackupVM Path>/exports)')
 		child_parser.add_argument('-p', '--pool-backup', action='store_true', help='Backup Pool DB')
 		child_parser.add_argument('-H', '--host-backup', action='store_true', help='Backup Hosts in Pool (dom0)')
 		child_parser.add_argument('-C', '--compress', action='store_true',

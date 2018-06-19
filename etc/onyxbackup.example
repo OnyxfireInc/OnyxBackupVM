@@ -7,7 +7,7 @@
 share_type = nfs
 
 # Directory where data will be backed up to
-backup_dir = /mnt/onyxbackup-xs/exports
+backup_dir = /mnt/onyxbackup/exports
 
 # Minimum percentage of space remaining for backup_dir before backups
 # are prevented
@@ -51,10 +51,10 @@ smtp_auth = false
 smtp_user = username
 smtp_pass = password
 smtp_starttls = false
-smtp_server = localhost
+smtp_server = mail.domain.tld
 smtp_port = 25
-smtp_hostname = xenserver
+smtp_hostname = xenserver.domain.tld
 smtp_timeout = 15
-smtp_subject = OnyxBackup - VM Backup Report
-smtp_from = xenserver@localhost
-smtp_to = you@example.com
+smtp_subject = OnyxBackupVM Backup Report
+smtp_from = xenserver@domain.tld
+smtp_to = reports@domain.tld
