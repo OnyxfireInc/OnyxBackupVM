@@ -1,54 +1,76 @@
-# OnyxBackup for XenServer
-XenServer Backup
+# OnyxBackupVM
+XenServer/XCP-NG VM Backup
+
+## Copyright
+```
+OnyxBackupVM
+Copyright (c) 2018 OnyxFire, Inc.
+	
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+```
 
 ## Overview
- - OnyxBackup-XS is run from a XenServer host and utilizes the native `xe vm-export` and `xe vdi-export` commands to backup both Linux and Windows VMs. 
+ - The OnyxBackupVM tool is run from a XenServer host and utilizes the native `xe vm-export` and `xe vdi-export` commands to backup both Linux and Windows VMs. 
  - The backup is run after a respective vm-snapshot or vdi-snapshot occurs, which allows for the backup to execute while the VM is up and running.
- - During the backup of specified VMs, this tool collects additional VM metadata using XenAPI. This additional information can be useful during VM restore situations and is stored in ".meta" files.
- - Typically, OnyxBackup-XS is implemented through scheduled crontab entries or can be run manually on a XenServer ssh session. It is important to keep in mind that the backup process does use critical dom0 resources, so running a backup during heavy workloads should be avoided (especially if used with `compress` option).
+ - During the backup of specified VMs, this tool collects additional VM metadata using XAPI. This additional information can be useful during VM restore situations and is stored in ".meta" files.
+ - Typically, OnyxBackupVM is implemented through scheduled crontab entries or can be run manually on a XenServer ssh session. It is important to keep in mind that the backup process does use critical dom0 resources, so running a backup during heavy workloads should be avoided (especially if used with `compress` option).
  - The SRs where one or more VDIs are located require sufficient free space to hold a complete snapshot of a VM. The temporary snapshots that are created during the backup process are deleted after the backup has completed.
 
 ## Quick Start Checklist
 
-1. OnyxBackup-XS will require lots of file storage; setup a storage server with an exported VM backup share.
+1. OnyxBackupVM will require lots of file storage; setup a storage server with an exported VM backup share.
    - Frequently NFS is used for the storage server, with many installation and configuration sources available on the web.
    - An optional SMB/CIFS mode can be enabled via the `share_type` option in the config file.
 2. For all of the XenServers in a given pool, mount the new share at your desired filesystem location.  
    - **NOTE**: Make sure to add the new mount information to the `/etc/fstab` file to ensure it is remounted on a reboot of the host.
-3. Download and extract the latest release to your desired execution location, such as `/mnt/OnyxBackup-XS`
-    - Generally you would extract to and run OnyxBackup-XS from the mounted backup share so that the same version, backups, logs, and configuration are visible to all XenServer hosts, though this is not a requirement
-    - `<onyxbackup-xs path>/etc`
+3. Download and extract the latest release to your desired execution location, such as `/mnt/onyxbackup`
+    - Generally you would extract to and run OnyxBackupVM from the mounted backup share so that the same version, backups, logs, and configuration are visible to all XenServer hosts, though this is not a requirement
+    - `<OnyxBackupVM path>/etc`
        - Contains `onyxbackup.example` (example onyxbackup.cfg file that is heavily commented)
        - Contains `logging.example` (example of logging.json with default logging configuration)
        - Location for optional configuration file `onyxbackup.cfg` for overriding default configuration
        - Location for optional `logging.json` for overriding default logging settings
-    - `<onyxbackup-xs path>/logs`
-       - Contains OnyxBackup-XS log files `onyxbackup-xs.log` and `debug.log` based upon default logging configuration
-    - `<onyxbackup-xs path>/exports`
+    - `<OnyxBackupVM path>/logs`
+       - Contains OnyxBackupVM log files `OnyxBackupVM.log` and `debug.log` based upon default logging configuration
+    - `<OnyxBackupVM path>/exports`
        - Contains all the VM/VDI backups
        - Can be independently configured to be located wherever you desire using the `backup_dir` option
-4. Inspect and customize certain options in the `<onyxbackup-xs path>/etc/onyxbackup.cfg`, `/etc/onyxbackup.cfg`, and/or `~/onyxbackup.cfg` as desired.
+4. Inspect and customize certain options in the `<OnyxBackupVM path>/etc/onyxbackup.cfg`, `/etc/onyxbackup.cfg`, and/or `~/onyxbackup.cfg` as desired.
    - The configuration files are read in the following order with a "last match wins" convention
-     - `<onyxbackup-xs path>/etc/onyxbackup.cfg`
+     - `<OnyxBackupVM path>/etc/onyxbackup.cfg`
      - `/etc/onyxbackup.cfg`
      - `~/onyxbackup.cfg`
      - Optional config file using `-c <file>` or `--config <file>` command-line option
 5. Initially use the `--preview` command-line option to confirm the resulting configuration from files and command-line flags before running an actual backup.
 6. Set up a crontab entry or method for executing backups on a schedule
-   - You can run OnyxBackup-XS from any host in the pool with all available options, not just the master; running it on a host with little to no VMs on it may be optimal since dom0 resources are used for backups.
+   - You can run OnyxBackupVM from any host in the pool with all available options, not just the master; running it on a host with little to no VMs on it may be optimal since dom0 resources are used for backups.
 
-## OnyxBackup-XS Command Usage
+## OnyxBackupVM Command Usage
 
 #### Basic usage:
 
-onyxbackup-xs.py [-h] [-v] [-c FILE] [-d PATH] [-p] [-H] [-l LEVEL] [-C] [-F FORMAT] [--preview] [-e STRING]  
+onyxbackup-vm.py [-h] [-v] [-c FILE] [-d PATH] [-p] [-H] [-l LEVEL] [-C] [-F FORMAT] [--preview] [-e STRING]  
    [-E STRING] [-x STRING]  
 
 optional arguments:  
 `-h, --help` show this help message and exit  
 `-v, --version` show program's version number and exit    
 `-c FILE, --config FILE` Config file for runtime overrides  
-`-d PATH, --backup-dir PATH` Backups directory (Default: `<onyxbackup-xs path>/exports`)  
+`-d PATH, --backup-dir PATH` Backups directory (Default: `<OnyxBackupVM path>/exports`)  
 `-p, --pool-backup` Backup Pool DB  
 `-H, --host-backup`  Backup Hosts in Pool (dom0)  
 `-l LEVEL, --log-level LEVEL`  Log Level (Default: `info`)  
@@ -65,35 +87,35 @@ VM name or Regex to exclude (Default: `None`) NOTE: Specify multiple times for m
 #### Some usage examples:
 
 	# Backup all VMs in the pool
-	./onyxbackup-xs.py
+	./onyxbackup-vm.py
 
 	# Backup a single VM by name (case sensitive)
-	./onyxbackup-xs.py  -e 'DEV-MYSQL'
+	./onyxbackup-vm.py  -e 'DEV-MYSQL'
 	
 	# Backup a single VM by name with spaces in name
-	./onyxbackup-xs.py -e 'DEV MYSQL'
+	./onyxbackup-vm.py -e 'DEV MYSQL'
 	
 	# Backup VMs by regex which matches more than one VM
-	./onyxbackup-xs.py -e 'DEV-MY.*'
+	./onyxbackup-vm.py -e 'DEV-MY.*'
 	
 	# Backup VM by name and keep last 2 backups (overrides max_backups)
-	./onyxbackup-xs.py  -e 'DEV-MYSQL:2'
+	./onyxbackup-vm.py  -e 'DEV-MYSQL:2'
 
 	# Export just root disk (xvda) for a single VM by name
-	./onyxbackup-xs.py -E 'DEV-MYSQL'
+	./onyxbackup-vm.py -E 'DEV-MYSQL'
 	
 	# Export just xvdb disk from a single VM by name without overriding number of backups to keep
-	./onyxbackup-xs.py -E 'DEV-MYSQL:-1:xvdb'
+	./onyxbackup-vm.py -E 'DEV-MYSQL:-1:xvdb'
 	
 	# Export 2 disks of a VM by name and keep last 7 backups
-	./onyxbackup-xs.py -E 'DEV-MYSQL:7:xvda;xvdb'
+	./onyxbackup-vm.py -E 'DEV-MYSQL:7:xvda;xvdb'
 	
 	# A mix of the options to show some typical selections if not using config file to specify VMs
-	./onyxbackup-xs.py -e 'PRD-.*' -e 'MYSQL123' -E 'APPSERVER01:8:xvda;xvdc' -e 'DEV-.*' -x 'DEV-SHORTtest' -p -H
+	./onyxbackup-vm.py -e 'PRD-.*' -e 'MYSQL123' -E 'APPSERVER01:8:xvda;xvdc' -e 'DEV-.*' -x 'DEV-SHORTtest' -p -H
 
 ### A few words about Python REGEX syntax
 
-For the handling of wildcard VMs, OnyxBackup-XS incorporates the native python regex library of regular expressions. **WARNING:** The syntax is slightly different from what is processed with the Linux family of grep commands. In python, a string followed by `*` causes the resulting regular expression to match zero or more repetitions of the preceding regular expression, as many repetitions as are possible. For example, `ab*` will match "a", "ab", or "a" followed by any number of "b" characters. Therefore, if you had PRD-a*, this will match PRD-a, PRD-aa, PRD-aaaSomething, as well as PRD- but _also_ PRD-Test, PRD-123 and anything else starting with PRD- since zero occurences of the "a" after the "-" are matched. To avoid this, PRD-a.* should be used, instead, indicating in this case PRD-a followed by any single character (".") zero or more("*") times.
+For the handling of wildcard VMs, OnyxBackupVM incorporates the native python regex library of regular expressions. **WARNING:** The syntax is slightly different from what is processed with the Linux family of grep commands. In python, a string followed by `*` causes the resulting regular expression to match zero or more repetitions of the preceding regular expression, as many repetitions as are possible. For example, `ab*` will match "a", "ab", or "a" followed by any number of "b" characters. Therefore, if you had PRD-a*, this will match PRD-a, PRD-aa, PRD-aaaSomething, as well as PRD- but _also_ PRD-Test, PRD-123 and anything else starting with PRD- since zero occurences of the "a" after the "-" are matched. To avoid this, PRD-a.* should be used, instead, indicating in this case PRD-a followed by any single character (".") zero or more("*") times.
 
 Note that the current implementation uses the re.match function which by design is expected to be front-anchored. You can explicitly preface a search string with the "^" operator, if desired, but it is already implied and the results will be the same.
 
@@ -154,43 +176,16 @@ Note that there are numerous combinations that may possibly conflict with each o
 
 ### Common cronjob examples
 
-Run backup once a week with no email report  
-`10 0 * * 6 <onyxbackup-xs path>/onyxbackup-xs.py >/dev/null 2>&1`
+Run backup once a week  
+`10 0 * * 6 <OnyxBackupVM path>/onyxbackup-vm.py >/dev/null 2>&1`
 
-Run backup once a week and let cron send email report on every run  
-`10 0 * * 6 <onyxbackup-xs path>/onyxbackup-xs.py`
+Run backup once a week and only log warnings and above  
+`10 0 * * 6 <OnyxBackupVM path>/onyxbackup-vm.py -l warning >/dev/null 2>&1`
 
-Run backup once a week and let cron send email only if there are warnings or errors  
-`10 0 * * 6 <onyxbackup-xs path>/onyxbackup-xs.py -l warning`
-
-Run backup of all VMs nightly and backup pool metadata and hosts weekly with full report emailed by cron  
+Run backup of all VMs nightly and backup pool metadata and hosts weekly
 ```
-  10 0 * * * <onyxbackup-xs path>/onyxbackup-xs.py
-  10 0 * * 6 <onyxbackup-xs path>/onyxbackup-xs.py -x '.*' -p -H
-```
-
-#### Configuring sSMTP on XenServer to send you emails
-XenServer uses sSMTP to send emails from the system for both XenServer alerts configured and system emails like from cron jobs
-
-_/etc/ssmtp/ssmtp.conf_
-```
-# Route system emails bound for root to go to your email address
-root=<your email address>
-# Username and password (uncomment if required by mail server)
-#authUser=username
-#authPass=password
-# Mail server and port to send emails to
-mailhub=<dns-name or ip>:<port>
-# Your intranet/internet domain from which you send emails (i.e. mycompany.com)
-RewriteDomain=<your-domain>
-# The following three lines can be uncommented to allow you to encrypt the emails and authentication when
-# sending emails from XenServer if supported by the mail server
-#UseTLS=YES
-#UseSTARTTLS=YES
-#TLS_CA_File=/etc/pki/tls/certs/ca-bundle.crt
-# Uncomment the below line if you wish to see DEBUG logging of the email system in the system logs to
-# troubleshoot issues
-#Debug=YES
+  10 0 * * * <OnyxBackupVM path>/onyxbackup-vm.py >/dev/null 2>&1
+  10 0 * * 6 <OnyxBackupVM path>/onyxbackup-vm.py -x '.*' -p -H >/dev/null 2>&1
 ```
 
 ### VM selection and max_backups operations
@@ -199,9 +194,9 @@ The number of VM backups saved is based upon the configured max_backups value. F
 
 **WARNING**: Each VDI backed up using vdi-export counts as a backup, even if for the same VM, so keep this in mind if you specify multiple disks for a VM (i.e. `MYVM03:2:xvda;xvdb` will only keep one backup of each disk since together they total 2 backups).
 
-The following VM selection operations apply to the vm-export/vdi-export configuration (both command-line and config file selections): (1) Remove any matched VMs from excludes (both simple and regex-based) from the available list of VMs in the pool, (2) load each matched VM in vdi_exports into the config for vdi-export, then finally (3) load each matched VM from vm_exports into the config for full export ignoring any VMs already marked for vdi-export. By using the `--preview` option the scope of the given OnyxBackup-XS run is clearly output and is a good way to test.
+The following VM selection operations apply to the vm-export/vdi-export configuration (both command-line and config file selections): (1) Remove any matched VMs from excludes (both simple and regex-based) from the available list of VMs in the pool, (2) load each matched VM in vdi_exports into the config for vdi-export, then finally (3) load each matched VM from vm_exports into the config for full export ignoring any VMs already marked for vdi-export. By using the `--preview` option the scope of the given OnyxBackupVM run is clearly output and is a good way to test.
 
-For any individual OnyxBackup-XS run, a VM found in the vdi-export list will take precedence over a matching entry in the vm-export list. The convention is that a VM is either backed up with a vm-export or a vdi-export, but not both. If at some point in time a VM grows in number of /dev/xvdX disks where it is required to switch from vm-export to vdi-export, then the same %BACKUP_DIR%/vm-name structure continues. Since, in this case, the backups are ordered by date with a mix of vdi-export and older vm-export backups, eventually the vm-export backups will be deleted based upon configured `max_backups`.
+For any individual OnyxBackupVM run, a VM found in the vdi-export list will take precedence over a matching entry in the vm-export list. The convention is that a VM is either backed up with a vm-export or a vdi-export, but not both. If at some point in time a VM grows in number of /dev/xvdX disks where it is required to switch from vm-export to vdi-export, then the same %BACKUP_DIR%/vm-name structure continues. Since, in this case, the backups are ordered by date with a mix of vdi-export and older vm-export backups, eventually the vm-export backups will be deleted based upon configured `max_backups`.
 
 ### VM Backup Directory Structure
 
@@ -236,5 +231,13 @@ Consult the Citrix XenServer Administrator's Guide chapter 8 and review sections
 ### Host Backup Restore
 Use the `xe host-restore` command. See `xe help host-restore` for parameter options.  
    * If `host_backup` option has been specified then a %BACKUP_DIR%/HOST_[hostname]/host_[date]-[time].xbk file will be created for each host in the pool.
+   
+## License
+This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 
-[OnyxBackup-XS]: https://github.com/OnyxfireInc/OnyxBackup-XS
+## Attribution
+This program was inspired by the great work of Northern Arizona University IT Department on [NAUBackup][NAUBackup]. Please note that this is a completely rewritten program from the ground up and, as such, it has and will continue to evolve into something new.
+
+[OnyxBackupVM]: https://github.com/OnyxfireInc/OnyxBackupVM
+[GPLv3]: https://github.com/OnyxfireInc/OnyxBackupVM/blob/master/LICENSE
+[NAUBackup]: https://github.com/NAUbackup/VmBackup
