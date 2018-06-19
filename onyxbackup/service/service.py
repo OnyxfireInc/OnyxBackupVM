@@ -171,8 +171,8 @@ class XenApiService(object):
 		# Get VM metadata
 		self.logger.debug('(i) -> Recording VM metadata: {}'.format(vm_record['name_label']))
 		meta_out.write('******* VM *******\n')
-		meta_out.write('name_label={}\n'.format(vm_record['name_label']))
-		meta_out.write('name_description={}\n'.format(vm_record['name_description']))
+		meta_out.write('name_label={}\n'.format(vm_record['name_label']).encode('utf8'))
+		meta_out.write('name_description={}\n'.format(vm_record['name_description']).encode('utf8'))
 		meta_out.write('memory_dynamic_max={}\n'.format(vm_record['memory_dynamic_max']))
 		meta_out.write('VCPUs_max={}\n'.format(vm_record['VCPUs_max']))
 		meta_out.write('VCPUs_at_startup={}\n'.format(vm_record['VCPUs_at_startup']))
