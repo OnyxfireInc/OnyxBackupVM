@@ -685,7 +685,7 @@ class XenApiService(object):
 		cmd = 'vm-list uuid={} params=os-version --minimal'.format(uuid)
 		os_version = self._get_xe_cmd_result(cmd)
 		if os_version:
-			os_version = os_version.split(';')[0][6:]
+			os_version = re.split('[;:|]', os_version)[1][1:]
 			self.logger.debug('(i) -> OS version: {}'.format(os_version))
 			return os_version
 		else:
