@@ -1,7 +1,6 @@
 # [OnyxBackupVM][OnyxBackupVM]
 XenServer/XCP-NG VM Backup
 
-## Copyright
 ```
 OnyxBackupVM
 Copyright (c) 2018 OnyxFire, Inc.
