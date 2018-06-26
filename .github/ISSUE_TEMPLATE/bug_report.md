@@ -20,7 +20,7 @@ A clear and concise description of what you expected to happen.
 **Screenshots**
 If applicable, add screenshots to help explain your problem.
 
-** Please complete the following information **
+**Please complete the following information**
  - Platform: [e.g. Xenserver or XCP-NG]
  - Platform Version: [e.g. 7.5]
  - OnyxBackupVM version: [e.g. v1.2.0]

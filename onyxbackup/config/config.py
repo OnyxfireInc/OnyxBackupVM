@@ -94,7 +94,7 @@ class Configurator(object):
 
 		self.logger.debug('(i) -> Checking if both vm_exports and vdi_exports are empty')
 		if ( not options['vm_exports'] ) and ( not options['vdi_exports'] ):
-			self.logger.debug('(i) -> Setting vm_export to default -> .* (all VMs)')
+			self.logger.debug('(i) ---> Setting vm_export to default -> .* (all VMs)')
 			options['vm_exports'] = ['.*']
 
 	# Private Functions

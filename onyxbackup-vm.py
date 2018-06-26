@@ -30,6 +30,8 @@ class Cli(object):
 
 	def __init__(self):
 		self.logger = getLogger('onyxbackup')
+		self.program_name = 'OnyxBackupVM'
+		self.program_version = 'v1.2.0'
 		self.config = self._setup()
 
 	# API Functions
@@ -38,51 +40,45 @@ class Cli(object):
 		try:
 			xenService = service.XenApiService(self.config)
 			server_name = self._get_server_name()
-			self.logger.info('---------------------------------------------------------')
-			self.logger.info('OnyxBackupVM running on {}'.format(server_name))
+			self.logger.info('-----------------------------------------------------')
+			self.logger.info('{} running on {}'.format(self.program_name, server_name))
 			self.logger.info('Started: {}'.format(self._get_date_string()))
-			self.logger.info('---------------------------------------------------------')
-			print('')
+			self.logger.info('-----------------------------------------------------')
 			self.logger.debug('(i) Processing VM lists')
 			xenService.process_vm_lists()
-			print('')
 
 			if self.config['preview']:
 				self._print_config()
-				print('')
 				self._end_run()
 				exit(0)
 
 			if self.config['host_backup']:
 				xenService.backup_hosts()
-				print('')
 
 			if self.config['pool_backup']:
 				xenService.backup_pool_db()
-				print('')
 
 			if self.config['vdi_exports']:
 				xenService.backup_vdi()
-				print('')
 
 			if self.config['vm_exports']:
 				xenService.backup_vm()
-				print('')
 
 			self._end_run()
-			
+
 			if self.config['smtp_enabled']:
 				xenService.send_email()
 			exit(0)
 		except Exception as e:
-			self.logger.critical('Fatal Exception: {}'.format(str(e)))
+			self.logger.exception(e)
 			self._end_run()
 			exit(1)
 
 	# Private Functions
 
 	def _end_run(self):
-		self.logger.info('---------------------------------------------------------')
+		print('')
+		self.logger.info('--------------------------------------------------------')
 		self.logger.info('Ended: {}'.format(self._get_date_string()))
 
 	def _get_date_string(self, date=''):
@@ -98,6 +94,7 @@ class Cli(object):
 		return uname()[1]
 
 	def _print_config(self):
+		print('')
 		self.logger.info('Running with these settings:')
 		self.logger.info('  backup_dir        = {}'.format(self.config['backup_dir']))
 		self.logger.info('  space_threshold   = {}'.format(self.config['space_threshold']))
@@ -125,20 +122,19 @@ class Cli(object):
 			self.logger.info('  smtp_from         = {}'.format(self.config['smtp_from']))
 			self.logger.info('  smtp_to           = {}'.format(self.config['smtp_to']))
 
-	def _print_vm_list(self, type, vms):
-		self.logger.info('  {} (count) = {}'.format(type, len(vms)))
+	def _print_vm_list(self, list_type, vms):
+		self.logger.info('  {} (count) = {}'.format(list_type, len(vms)))
 		str = ''
 		for vm in vms:
 			str += '{}, '.format(vm)
 		if len(str) > 1:
 			str = str[:-2]
-		self.logger.info('  {}: {}'.format(type, str))
+		self.logger.info('  {}: {}'.format(list_type, str))
 
 	def _setup(self):
-		version = '1.1.1'
 		current_year = datetime.datetime.now().year
 		copyright = 'Copyright (C) {}  OnyxFire, Inc. <https://onyxfireinc.com>'.format(current_year)
-		program_title = 'OnyxBackupVM {}'.format(version)
+		program_title = '{} {}'.format(self.program_name, self.program_version)
 		written_by = 'Written by: Lance Fogle (@lancefogle)'
 
 		parent_parser = argparse.ArgumentParser(add_help=False)

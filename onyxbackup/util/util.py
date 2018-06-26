@@ -24,6 +24,7 @@ from logging import getLogger
 from os import devnull, mkdir, remove
 from os.path import exists, getsize, join
 from shlex import split
+from decimal import Decimal
 
 class Helper():
 
@@ -32,63 +33,19 @@ class Helper():
 
 	def delete_file(self, file):
 		if exists(file):
-			self.logger.debug('(i) -> File exists, deleting...')
+			self.logger.debug('(i) ---> File exists, deleting...')
 			try:
 				remove(file)
 				return True
 			except OSError as e:
-				self.logger.critical('(!) Unable to delete file "{}": {}'.format(file, e))
+				self.logger.error('(!) Unable to delete file "{}": {}'.format(file, e))
 		else:
-			self.logger.debug('(i) -> File does not exist: {}'.format(file))
+			self.logger.debug('(i) ---> File does not exist: {}'.format(file))
+			return True
 		return False
 
-	def get_elapsed(self, start, end, as_string=True):
-		difference = end - start
-		elapsed = ''
-		symbol = ''
-		if difference.seconds < 60:
-			elapsed = difference.seconds
-			symbol = 's'
-		elif difference.seconds < 3600:
-			elapsed = difference.seconds / 60
-			symbol = 'm'
-		elif difference.seconds < 86400:
-			elapsed = (difference.seconds / 60) / 60
-			symbol = 'h'
-		else:
-			elapsed = difference.days
-			symbol = 'd'
-		if as_string:
-			elapsed = '{}{}'.format(str(elapsed), symbol)
-		return elapsed
-
-	def get_file_size(self, file):
-		size = 0
-		symbol = 'B'
-		if exists(file):
-			try:
-				size = getsize(file)
-				if size < 1024:
-					symbol = 'B'
-				elif (size / 1024) < 1024:
-					size = size / 1024
-					symbol = 'KB'
-				elif (size / (1024 * 1024)) < 1024:
-					size = size / (1024 * 1024)
-					symbol = 'MB'
-				else:
-					size = size / (1024 * 1024 * 1024)
-					symbol = 'GB'
-			except OSError as e:
-				self.logger.error('(!) Unable to get file size: {}'.format(e))
-		else:
-			self.logger.debug('(i) File does not exist: {}'.format(file))
-
-		sizeString = '{}{}'.format(str(size), symbol)
-		return sizeString
-
 	def get_cmd_result(self, cmd_line, strip_newline=True):
-		self.logger.debug('(i) -> Running command: {}'.format(cmd_line))
+		self.logger.debug('(i) ---> Running command: {}'.format(cmd_line))
 		result = ''
 		cmd = split(cmd_line)
 		try:
@@ -108,15 +65,62 @@ class Helper():
 			% (now.month, now.day, now.year, now.hour, now.minute, now.second)
 		return str
 
+	def get_elapsed(self, start, end, as_string=True):
+		difference = end - start
+		seconds = Decimal(float(difference.seconds))
+		elapsed = ''
+		symbol = ''
+		if seconds < 60:
+			elapsed = seconds
+			symbol = 's'
+		elif seconds < 3600:
+			elapsed = seconds / 60
+			symbol = 'm'
+		elif seconds < 86400:
+			elapsed = (seconds / 60) / 60
+			symbol = 'h'
+		else:
+			elapsed = difference.days
+			symbol = 'd'
+
+		if as_string:
+			elapsed = '{}{}'.format(str(elapsed.quantize(Decimal('0.00'))), symbol)
+		return elapsed
+
+	def get_file_size(self, file):
+		size = 0
+		symbol = 'B'
+		if exists(file):
+			try:
+				size = Decimal(float(getsize(file)))
+				if size < 1024:
+					symbol = 'B'
+				elif (size / 1024) < 1024:
+					size = size / 1024
+					symbol = 'KB'
+				elif (size / (1024 * 1024)) < 1024:
+					size = size / (1024 * 1024)
+					symbol = 'MB'
+				else:
+					size = size / (1024 * 1024 * 1024)
+					symbol = 'GB'
+			except OSError as e:
+				self.logger.error('(!) Unable to get file size: {}'.format(e))
+		else:
+			self.logger.debug('(i) --> File does not exist: {}'.format(file))
+
+		sizeString = '{}{}'.format(str(size.quantize(Decimal('0.00'))), symbol)
+		return sizeString
+
 	def get_remaining_space(self, filesystem):
 		cmd = '/bin/df --output=pcent {}'.format(filesystem)
 		fs_info = self.get_cmd_result(cmd)
 		try:
 			output = fs_info.split('\n')[1].lstrip()[:-1]
-			self.logger.debug('(i) -> Used space: {}'.format(output))
+			self.logger.debug('(i) ---> Used space: {}%'.format(output))
 			percent_used = int(output)
 		except ValueError as e:
-			self.logger.debug('(i) -> Unexpectedly returned non-integer; defaulting to 100%')
+			self.logger.debug('(i) ---> Unexpectedly returned non-integer; defaulting to 100%')
 			percent_used = int(100)
 		percent_remaining = 100 - percent_used
 		return percent_remaining
@@ -131,11 +135,10 @@ class Helper():
 		return str
 
 	def run_cmd(self, cmd_line):
-		self.logger.debug('(i) -> Running command: {}'.format(cmd_line))
+		self.logger.debug('(i) ---> Running command: {}'.format(cmd_line))
 		cmd = split(cmd_line)
-		FNULL = open(devnull, 'w')
-		result = subprocess.call(cmd, stdout=FNULL, stderr=subprocess.STDOUT)
-		FNULL.close()
+		with open(devnull, 'w') as FNULL:
+			result = subprocess.call(cmd, stdout=FNULL, stderr=subprocess.STDOUT)
 		return result
 
 	def verify_path(self, path):
@@ -154,7 +157,7 @@ class Helper():
 		try:
 			result = self.run_cmd(cmd)
 			if result <> 0:
-				self.logger.debug('(i) -> Command returned non-zero exit status: {}'.format(cmd))
+				self.logger.debug('(i) ---> Command returned non-zero exit status: {}'.format(cmd))
 				return False
 			else:
 				cmd = '/bin/rm -f "{}"'.format(touchfile)
