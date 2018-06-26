@@ -570,7 +570,7 @@ class XenApiService(object):
 			self._add_status('error', '(!) Failed to export {}'.format(export_type.upper()))
 			return False
 		backup_file_size = self._h.get_file_size(file)
-		self.logger.info('(i) -> Backup size: {}'.format(backup_file_size))
+		self.logger.info('-> Backup size: {}'.format(backup_file_size))
 		return True
 
 	def _get_all_hosts(self, as_list=True):
