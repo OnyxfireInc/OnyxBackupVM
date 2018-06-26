@@ -300,7 +300,7 @@ class XenApiService(object):
 				self._stop_task()
 				continue
 
-			snap_uuid = self._snapshot(vm_meta['uuid'])
+			snap_uuid = self._snapshot(vm_meta['uuid'], snapshot_type)
 			if not snap_uuid:
 				self._h.delete_file(meta_backup_file)
 				self.logger.info(skip_message)
@@ -314,7 +314,7 @@ class XenApiService(object):
 				self._stop_task()
 				continue
 
-			if not self._export_to_file(snap_uuid, backup_file, snapshot_type):
+			if not self._export_to_file(snap_uuid, backup_file):
 				self._uninstall_vm(snap_uuid)
 				self._h.delete_file(meta_backup_file)
 				self.logger.info(skip_message)
@@ -541,6 +541,7 @@ class XenApiService(object):
 		else:
 			self._add_status('error', '(!) Invalid snapshot type: {}'.format(snapshot_type))
 			return False
+
 		if not self._run_xe_cmd(cmd):
 			self._add_status('error', '(!) Failed to destroy snapshot: {}'.format(uuid))
 			return False
@@ -563,6 +564,7 @@ class XenApiService(object):
 			cmd = 'host-backup host="{}" file-name="{}" enabled=true'.format(id, file)
 		else:
 			self._add_status('error', '(!) Invalid export type: {}'.format(export_type))
+			return False
 
 		if not self._run_xe_cmd(cmd):
 			self._add_status('error', '(!) Failed to export {}'.format(export_type.upper()))
