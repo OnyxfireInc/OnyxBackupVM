@@ -286,7 +286,7 @@ class XenApiService(object):
 				self._stop_task()
 				continue
 
-			if self._is_windows_vm(vm_meta['uuid'])
+			if self._is_windows_vm(vm_meta['uuid']):
 				if self._is_quiesce_enabled(vm_meta):
 					snapshot_type = 'vm-vss'
 
