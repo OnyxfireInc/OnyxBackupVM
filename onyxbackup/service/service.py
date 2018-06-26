@@ -816,7 +816,7 @@ class XenApiService(object):
 
 			@return snapshot uuid or False if failed
 		"""
-		self.logger.info('> Taking snapshot of {}'.format(snapshot_type))
+		self.logger.info('> Taking snapshot of {}'.format(snapshot_type.upper()))
 
 		if snapshot_type == 'vm':
 			cmd = 'vm-snapshot vm={} new-name-label="{}"'.format(uuid, snap_name)
