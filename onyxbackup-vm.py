@@ -31,7 +31,7 @@ class Cli(object):
 	def __init__(self):
 		self.logger = getLogger('onyxbackup')
 		self.program_name = 'OnyxBackupVM'
-		self.program_version = 'v1.2.0'
+		self.program_version = 'v1.2.1'
 		self.config = self._setup()
 
 	# API Functions

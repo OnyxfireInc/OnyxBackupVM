@@ -830,6 +830,9 @@ class XenApiService(object):
 
 		snap_uuid = self._get_xe_cmd_result(cmd)
 		if not snap_uuid:
+			if snapshot_type == 'vm-vss':
+				self._add_status('warning', '(!) VSS snapshot failed. Falling back to standard snapshot.')
+				return self._snapshot(uuid)
 			self._add_status('error', '(!) Failed to create a snapshot')
 			return False
 		return snap_uuid
