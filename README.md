@@ -1,4 +1,4 @@
-# [OnyxBackupVM][OnyxBackupVM]
+# OnyxBackupVM
 XenServer/XCP-NG VM Backup
 
 ```
