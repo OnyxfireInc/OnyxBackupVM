@@ -1,7 +1,7 @@
 # Changelog for OnyxBackupVM
 ### VM Backup for XenServer/XCP-NG
 
-### v1.2.1 - ??
+### v1.2.1 - 24 July 2018
   #### Features and Enhancements
   - VSS snapshots should have fallback #10
 
