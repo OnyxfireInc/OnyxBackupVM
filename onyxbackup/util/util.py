@@ -83,8 +83,8 @@ class Helper():
 				seconds -= value * count
 				if value == 1:
 					name = name.rstrip('s')
-				result.append("{}{}".format(value, name))
-		return ' '.join(result[:granularity])
+				result.append("{} {}".format(value, name))
+		return ', '.join(result[:granularity])
 
 	def get_file_size(self, file):
 		size = 0
