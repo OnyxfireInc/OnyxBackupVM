@@ -19,7 +19,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import argparse, datetime
+import argparse
+from datetime import datetime
 from logging import getLogger
 from os import uname
 from sys import exit
@@ -31,7 +32,7 @@ class Cli(object):
 	def __init__(self):
 		self.logger = getLogger('onyxbackup')
 		self.program_name = 'OnyxBackupVM'
-		self.program_version = 'v1.2.1'
+		self.program_version = 'v1.2.2'
 		self.config = self._setup()
 
 	# API Functions
@@ -83,7 +84,7 @@ class Cli(object):
 
 	def _get_date_string(self, date=''):
 		if date == '':
-			now = datetime.datetime.now()
+			now = datetime.now()
 		else:
 			now = date
 		str = '%02d/%02d/%04d %02d:%02d:%02d' \
@@ -132,7 +133,7 @@ class Cli(object):
 		self.logger.info('  {}: {}'.format(list_type, str))
 
 	def _setup(self):
-		current_year = datetime.datetime.now().year
+		current_year = datetime.now().year
 		copyright = 'Copyright (C) {}  OnyxFire, Inc. <https://onyxfireinc.com>'.format(current_year)
 		program_title = '{} {}'.format(self.program_name, self.program_version)
 		written_by = 'Written by: Lance Fogle (@lancefogle)'

@@ -19,7 +19,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import datetime, re
+import re
+from datetime import datetime
 from logging import getLogger
 from os import listdir
 from os.path import getmtime, join
@@ -730,10 +731,11 @@ class XenApiService(object):
 
 	def _print_function_footer(self, title):
 		"""
-			Print the footer of a named unction in the logs
+			Print the footer of a named function in the logs
 		"""
-		function_end = datetime.datetime.now()
-		elapsed = self._h.get_elapsed(self.status['function_start'], function_end)
+		function_end = datetime.now()
+		difference = function_end - self.status['function_start']
+		elapsed = self._h.get_elapsed(difference, 3)
 		self.logger.info('________________________________________')
 		self.logger.info('{} completed at {}'.format(title, self._h.get_time_string(function_end)))
 		self.logger.info('time: {}'.format(elapsed))
@@ -753,8 +755,9 @@ class XenApiService(object):
 		"""
 			Print the footer of a named task in the logs
 		"""
-		task_end = datetime.datetime.now()
-		elapsed = self._h.get_elapsed(start, task_end)
+		task_end = datetime.now()
+		difference = task_end - start
+		elapsed = self._h.get_elapsed(difference, 3)
 		self.logger.info('--- {} completed at {} ---'.format(title, self._h.get_time_string(task_end)))
 		self.logger.info('time: {}'.format(elapsed))
 
@@ -843,7 +846,7 @@ class XenApiService(object):
 		"""
 		self._create_status()
 		self.status['function'] = title
-		self.status['function_start'] = datetime.datetime.now()
+		self.status['function_start'] = datetime.now()
 		self._print_function_header(title)
 
 	def _start_task(self, title):
@@ -851,7 +854,7 @@ class XenApiService(object):
 			Perform initial setup for a named task
 		"""
 		self.status['task'] = title
-		self.status['task_start'] = datetime.datetime.now()
+		self.status['task_start'] = datetime.now()
 		self._print_task_header(title, self.status['task_start'])
 
 	def _start_subtask(self, title):
@@ -859,7 +862,7 @@ class XenApiService(object):
 			Perform initial setup for a named subtask
 		"""
 		self.status['subtask'] = title
-		self.status['subtask_start'] = datetime.datetime.now()
+		self.status['subtask_start'] = datetime.now()
 		self._print_task_header(title, self.status['subtask_start'])
 
 	def _stop_function(self):

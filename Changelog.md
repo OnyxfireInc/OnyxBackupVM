@@ -1,6 +1,10 @@
 # Changelog for OnyxBackupVM
 ### VM Backup for XenServer/XCP-NG
 
+### v1.2.2 - 8 August 2018
+  #### Features and Enhancements
+  - Time elapsed in minutes/hours instead of decimal #12
+
 ### v1.2.1 - 24 July 2018
   #### Features and Enhancements
   - VSS snapshots should have fallback #10

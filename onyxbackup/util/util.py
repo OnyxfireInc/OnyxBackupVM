@@ -19,7 +19,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import datetime, subprocess
+import subprocess
+from datetime import datetime
 from logging import getLogger
 from os import devnull, mkdir, remove
 from os.path import exists, getsize, join
@@ -58,34 +59,32 @@ class Helper():
 
 	def get_date_string(self, date=''):
 		if date == '':
-			now = datetime.datetime.now()
+			now = datetime.now()
 		else:
 			now = date
 		str = '%02d%02d%04d-%02d%02d%02d' \
 			% (now.month, now.day, now.year, now.hour, now.minute, now.second)
 		return str
 
-	def get_elapsed(self, start, end, as_string=True):
-		difference = end - start
-		seconds = Decimal(float(difference.seconds))
-		elapsed = ''
-		symbol = ''
-		if seconds < 60:
-			elapsed = seconds
-			symbol = 's'
-		elif seconds < 3600:
-			elapsed = seconds / 60
-			symbol = 'm'
-		elif seconds < 86400:
-			elapsed = (seconds / 60) / 60
-			symbol = 'h'
-		else:
-			elapsed = difference.days
-			symbol = 'd'
+	def get_elapsed(self, timedelta, granularity=2):
+		intervals = (
+			('weeks', 604800),
+			('days', 86400),
+			('hours', 3600),
+			('minutes', 60),
+			('seconds', 1),
+		)
+		result = []
+		seconds = timedelta.total_seconds()
 
-		if as_string:
-			elapsed = '{}{}'.format(str(elapsed.quantize(Decimal('0.00'))), symbol)
-		return elapsed
+		for name, count in intervals:
+			value = seconds // count
+			if value:
+				seconds -= value * count
+				if value == 1:
+					name = name.rstrip('s')
+				result.append("{}{}".format(value, name))
+		return ' '.join(result[:granularity])
 
 	def get_file_size(self, file):
 		size = 0
@@ -127,7 +126,7 @@ class Helper():
 
 	def get_time_string(self, date=''):
 		if not date:
-			now = datetime.datetime.now()
+			now = datetime.now()
 		else:
 			now = date
 		str = '%02d:%02d:%02d' \
