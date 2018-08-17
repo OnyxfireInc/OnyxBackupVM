@@ -1,5 +1,5 @@
 # OnyxBackupVM
-XenServer/XCP-NG VM Backup
+XenServer/XCP-ng VM Backup
 
 ```
 OnyxBackupVM
