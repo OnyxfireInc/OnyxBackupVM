@@ -78,12 +78,15 @@ class Helper():
 		seconds = timedelta.total_seconds()
 
 		for name, count in intervals:
-			value = seconds // count
-			if value:
-				seconds -= value * count
-				if value == 1:
-					name = name.rstrip('s')
-				result.append("{} {}".format(value, name))
+		    value = seconds // count
+		    if value:
+		      seconds -= value * count
+		      if value == 1:
+		        name = name.rstrip('s')
+		      result.append("{} {}".format(value, name))
+
+		if not result:
+		    result.append("<1 second")
 		return ', '.join(result[:granularity])
 
 	def get_file_size(self, file):
