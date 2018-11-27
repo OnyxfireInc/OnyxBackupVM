@@ -1,6 +1,10 @@
 # Changelog for OnyxBackupVM
 ### VM Backup for XenServer/XCP-NG
 
+### v1.2.3 - 26 November 2018
+  #### Bugs
+  - Fixed blank elapsed time for operations less than 1 second
+
 ### v1.2.2 - 8 August 2018
   #### Features and Enhancements
   - Time elapsed in minutes/hours instead of decimal #12
