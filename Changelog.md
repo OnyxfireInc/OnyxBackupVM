@@ -1,6 +1,11 @@
 # Changelog for OnyxBackupVM
 ### VM Backup for XenServer/XCP-NG
 
+### Future Release
+  #### Features and Enhancements
+  - Convert remaining functions to XAPI calls only
+  - Automatically use remote authentication if not running on xcp-ng host
+
 ### v1.2.3 - 26 November 2018
   #### Bugs
   - Fixed blank elapsed time for operations less than 1 second
