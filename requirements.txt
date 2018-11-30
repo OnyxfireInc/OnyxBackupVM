@@ -1,1 +1,1 @@
-xen-api
+xapi-project/xen-api
