@@ -1,1 +1,1 @@
-xapi
+xen-api
