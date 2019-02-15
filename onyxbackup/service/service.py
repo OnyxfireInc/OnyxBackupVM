@@ -422,8 +422,9 @@ class XenApiService(object):
 				meta_out.write('memory_dynamic_max={}\n'.format(vm['memory_dynamic_max']))
 				meta_out.write('VCPUs_max={}\n'.format(vm['VCPUs_max']))
 				meta_out.write('VCPUs_at_startup={}\n'.format(vm['VCPUs_at_startup']))
-				if vm['other_config']['base_template_name']:
-					meta_out.write('base_template_name={}\n'.format(vm['other_config']['base_template_name']))
+				if 'base_template_name' in vm['other_config']:
+					if vm['other_config']['base_template_name']:
+						meta_out.write('base_template_name={}\n'.format(vm['other_config']['base_template_name']))
 				meta_out.write('os_version={}\n'.format(self._get_os_version(vm['uuid'])))
 				meta_out.write('orig_uuid={}\n'.format(vm['uuid']))
 				meta_out.write('\n')
