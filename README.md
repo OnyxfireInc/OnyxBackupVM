@@ -234,7 +234,7 @@ Use the `xe host-restore` command. See `xe help host-restore` for parameter opti
 ## License
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 
-## Attribution
+## Acknowledgments
 This program was inspired by the great work of Northern Arizona University IT Department on [NAUBackup][NAUBackup]. Please note that this is a completely rewritten program from the ground up and, as such, it has and will continue to evolve into something new.
 
 [OnyxBackupVM]: https://github.com/OnyxfireInc/OnyxBackupVM
