@@ -6,6 +6,12 @@
   - Convert remaining functions to XAPI calls only
   - Automatically use remote authentication if not running on xcp-ng host
 
+### v1.3.0 - 18 March 2019
+  #### Features and Enhancments
+  - VDI exports and VM Exports of the same VM #15
+  #### Bugs
+  - VM can be processed twice if the VM is matched twice within the same list under certain circumstances #16
+
 ### v1.2.3 - 26 November 2018
   #### Bugs
   - Fixed blank elapsed time for operations less than 1 second
