@@ -7,7 +7,7 @@
   - Automatically use remote authentication if not running on xcp-ng host
 
 ### v1.3.0 - 18 March 2019
-  #### Features and Enhancments
+  #### Features and Enhancements
   - VDI exports and VM Exports of the same VM #15
   #### Bugs
   - VM can be processed twice if the VM is matched twice within the same list under certain circumstances #16
