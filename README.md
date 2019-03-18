@@ -121,7 +121,7 @@ Note that the current implementation uses the re.match function which by design 
 A VM name is considered to be a simple (non-wildcard) name, provided that it contains only combinations of any of the following: letters (upper as well as lower case), numerals 0 through 9, the space character, hyphens (dashes), and underscore characters. These will _not be handled using regex operations_!
 
 ### Configuration
-Configuration of backups follows the below order of precendence and lower precedence matches will not match the same VM already matched by a higher precedence match. If a VM is matched in for VDI export and for VM export both will be performed.
+Configuration of backups follows the below order of precendence and lower precedence matches will not match the same VM already matched by a higher precedence match. If a VM is matched for VDI export and for VM export both will be performed.
 1. Excludes
 2. VDI Exports (just disk) and/or VM Exports (full backup)
 
