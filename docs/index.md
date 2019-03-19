@@ -1,7 +1,6 @@
 # OnyxBackupVM
-XenServer/XCP-NG VM Backup
+XenServer/XCP-ng VM Backup
 
-## Copyright
 ```
 OnyxBackupVM
 Copyright (c) 2018 OnyxFire, Inc.
@@ -122,10 +121,9 @@ Note that the current implementation uses the re.match function which by design 
 A VM name is considered to be a simple (non-wildcard) name, provided that it contains only combinations of any of the following: letters (upper as well as lower case), numerals 0 through 9, the space character, hyphens (dashes), and underscore characters. These will _not be handled using regex operations_!
 
 ### Configuration
-Configuration of backups follows the below order of precendence and lower precedence matches will not match the same VM already matched by a higher precedence match:
+Configuration of backups follows the below order of precendence and lower precedence matches will not match the same VM already matched by a higher precedence match. If a VM is matched for VDI export and for VM export both will be performed.
 1. Excludes
-2. VDI Exports (just disk)
-3. VM Exports (full backup)
+2. VDI Exports (just disk) and/or VM Exports (full backup)
 
 #### Examples of configuration file syntax for VMs to backup
 
@@ -235,7 +233,7 @@ Use the `xe host-restore` command. See `xe help host-restore` for parameter opti
 ## License
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 
-## Attribution
+## Acknowledgments
 This program was inspired by the great work of Northern Arizona University IT Department on [NAUBackup][NAUBackup]. Please note that this is a completely rewritten program from the ground up and, as such, it has and will continue to evolve into something new.
 
 [OnyxBackupVM]: https://github.com/OnyxfireInc/OnyxBackupVM
