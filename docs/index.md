@@ -1,9 +1,9 @@
 # OnyxBackupVM
-XenServer/XCP-ng VM Backup
+Citrix Hypervisor/XCP-ng VM Backup
 
 ```
 OnyxBackupVM
-Copyright (c) 2018 OnyxFire, Inc.
+Copyright (c) 2017-2018 OnyxFire, Inc.
 	
 The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
@@ -23,10 +23,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ```
 
 ## Overview
- - The OnyxBackupVM tool is run from a XenServer host and utilizes the native `xe vm-export` and `xe vdi-export` commands to backup both Linux and Windows VMs. 
+ - The OnyxBackupVM tool is run from a Citrix Hypervisor or XCP-ng host and utilizes the native `xe vm-export` and `xe vdi-export` commands to backup both Linux and Windows VMs. 
  - The backup is run after a respective vm-snapshot or vdi-snapshot occurs, which allows for the backup to execute while the VM is up and running.
  - During the backup of specified VMs, this tool collects additional VM metadata using XAPI. This additional information can be useful during VM restore situations and is stored in ".meta" files.
- - Typically, OnyxBackupVM is implemented through scheduled crontab entries or can be run manually on a XenServer ssh session. It is important to keep in mind that the backup process does use critical dom0 resources, so running a backup during heavy workloads should be avoided (especially if used with `compress` option).
+ - Typically, OnyxBackupVM is implemented through scheduled crontab entries or can be run manually on an ssh session. It is important to keep in mind that the backup process does use critical dom0 resources, so running a backup during heavy workloads should be avoided (especially if used with `compress` option).
  - The SRs where one or more VDIs are located require sufficient free space to hold a complete snapshot of a VM. The temporary snapshots that are created during the backup process are deleted after the backup has completed.
 
 ## Quick Start Checklist
@@ -34,10 +34,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 1. OnyxBackupVM will require lots of file storage; setup a storage server with an exported VM backup share.
    - Frequently NFS is used for the storage server, with many installation and configuration sources available on the web.
    - An optional SMB/CIFS mode can be enabled via the `share_type` option in the config file.
-2. For all of the XenServers in a given pool, mount the new share at your desired filesystem location.  
+2. For all of the servers in a given pool, mount the new share at your desired filesystem location.  
    - **NOTE**: Make sure to add the new mount information to the `/etc/fstab` file to ensure it is remounted on a reboot of the host.
 3. Download and extract the latest release to your desired execution location, such as `/mnt/onyxbackup`
-    - Generally you would extract to and run OnyxBackupVM from the mounted backup share so that the same version, backups, logs, and configuration are visible to all XenServer hosts, though this is not a requirement
+    - Generally you would extract to and run OnyxBackupVM from the mounted backup share so that the same version, backups, logs, and configuration are visible to all hosts, though this is not a requirement
     - `<OnyxBackupVM path>/etc`
        - Contains `onyxbackup.example` (example onyxbackup.cfg file that is heavily commented)
        - Contains `logging.example` (example of logging.json with default logging configuration)
@@ -204,7 +204,7 @@ The VM backup directory has this format %BACKUP_DIR%/vm-name/ and each VM backup
 The vm backup file has one of four possible formats, (1) backup_[date]-[time].xva which is created from a vm-export, (2) backup_[date]-[time].xva.gz created from a vm-export with `compress` option, (3) backup_[date]-[time].raw which is created from vdi-export in raw format, or (4) backup_[date]-[time].vhd which is created from vdi-export in vhd format.
 
 #### Additional VM Metadata
-For each backup, there is a dump of selected XenServer VM metadata in a backup_[date]-[time].meta file. This information can be useful in certain recovery situations:
+For each backup, there is a dump of selected VM metadata in a backup_[date]-[time].meta file. This information can be useful in certain recovery situations:
 
 * VM
 	* name_label, name_description, memory_dynamic_max, VCPUs_max, VCPUs_at_startup, os_version, orig_uuid
@@ -223,7 +223,7 @@ Use the `xe vm-import` command. See `xe help vm-import` for parameter options. I
 Use the `xe vdi-import` command. See `xe help vdi-import` for parameter options. The current Citrix documentation is lacking and the best vdi-import examples can be found at http://wiki.xensource.com/wiki/Disk_import/export_APIs
 
 ### Pool DB Restore
-Consult the Citrix XenServer Administrator's Guide chapter 8 and review sections that discuss the `xe pool-restore-database` command.  
+Consult the Citrix Hypervisor Administrator's Guide chapter 8 and review sections that discuss the `xe pool-restore-database` command.  
    * If `pool_backup` option has been specified then a %BACKUP_DIR%/POOL_DB/metadata_[date]-[time].db file will be created.
 
 ### Host Backup Restore
