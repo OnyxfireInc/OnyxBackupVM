@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 # OnyxBackupVM
-# Copyright (c) 2018 OnyxFire, Inc.
+# Copyright (c) 2017-2018 OnyxFire, Inc.
 	
 # The above copyright notice and this permission notice shall be included in all
 # copies or substantial portions of the Software.
@@ -133,8 +133,7 @@ class Cli(object):
 		self.logger.info('  {}: {}'.format(list_type, str))
 
 	def _setup(self):
-		current_year = datetime.now().year
-		copyright = 'Copyright (C) {}  OnyxFire, Inc. <https://onyxfireinc.com>'.format(current_year)
+		copyright = 'Copyright (C) 2017-2018  OnyxFire, Inc. <https://onyxfireinc.com>'
 		program_title = '{} {}'.format(self.program_name, self.program_version)
 		written_by = 'Written by: Lance Fogle (@lancefogle)'
 
