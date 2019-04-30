@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 # part of OnyxBackupVM
-# Copyright (c) 2018 OnyxFire, Inc.
+# Copyright (c) 2017-2018 OnyxFire, Inc.
 
 # The above copyright notice and this permission notice shall be included in all
 # copies or substantial portions of the Software.
