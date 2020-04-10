@@ -71,7 +71,7 @@ class Helper():
 			now = datetime.now()
 		else:
 			now = date
-		return now.isoformat(' ', 'seconds')
+		return now.isoformat(' ')
 
 	def get_elapsed(self, timedelta, granularity=2):
 		intervals = (
