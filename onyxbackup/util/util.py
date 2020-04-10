@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 # part of OnyxBackupVM
-# Copyright (c) 2017-2018 OnyxFire, Inc.
+# Copyright (c) 2017-2020 OnyxFire, Inc.
 	
 # The above copyright notice and this permission notice shall be included in all
 # copies or substantial portions of the Software.
@@ -62,9 +62,16 @@ class Helper():
 			now = datetime.now()
 		else:
 			now = date
-		str = '%02d%02d%04d-%02d%02d%02d' \
-			% (now.month, now.day, now.year, now.hour, now.minute, now.second)
+		str = '%04d%02d%02d-%02d%02d%02d' \
+			% (now.year, now.month, now.day, now.hour, now.minute, now.second)
 		return str
+	
+	def get_date_string_print(self, date=''):
+		if date == '':
+			now = datetime.now()
+		else:
+			now = date
+		return now.isoformat(' ', 'seconds')
 
 	def get_elapsed(self, timedelta, granularity=2):
 		intervals = (

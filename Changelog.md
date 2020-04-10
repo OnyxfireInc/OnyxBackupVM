@@ -1,10 +1,14 @@
 # Changelog for OnyxBackupVM
-### VM Backup for XenServer/XCP-NG
+### VM Backup for Citrix Hypervisor/XCP-NG
 
 ### Future Release
   #### Features and Enhancements
   - Convert remaining functions to XAPI calls only
-  - Automatically use remote authentication if not running on xcp-ng host
+  - Automatically use remote authentication if not running on CH/xcp-ng host
+
+### v1.3.1 - 10 Apr 2020
+  #### Features and Enhancements
+  - Changed logging of date and time to ISO 8601 format #18
 
 ### v1.3.0 - 18 March 2019
   #### Features and Enhancements

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 # OnyxBackupVM
-# Copyright (c) 2017-2018 OnyxFire, Inc.
+# Copyright (c) 2017-2020 OnyxFire, Inc.
 	
 # The above copyright notice and this permission notice shall be included in all
 # copies or substantial portions of the Software.
@@ -26,14 +26,16 @@ from os import uname
 from sys import exit
 import onyxbackup.config as config
 import onyxbackup.service as service
+import onyxbackup.util as util
 
 class Cli(object):
 
 	def __init__(self):
 		self.logger = getLogger('onyxbackup')
 		self.program_name = 'OnyxBackupVM'
-		self.program_version = 'v1.3.0'
+		self.program_version = 'v1.3.1'
 		self.config = self._setup()
+		self._h = util.Helper()
 
 	# API Functions
 
@@ -43,7 +45,7 @@ class Cli(object):
 			server_name = self._get_server_name()
 			self.logger.info('-----------------------------------------------------')
 			self.logger.info('{} running on {}'.format(self.program_name, server_name))
-			self.logger.info('Started: {}'.format(self._get_date_string()))
+			self.logger.info('Started: {}'.format(self._h.get_date_string_print()))
 			self.logger.info('-----------------------------------------------------')
 			self.logger.debug('(i) Processing VM lists')
 			xenService.process_vm_lists()
@@ -80,16 +82,7 @@ class Cli(object):
 	def _end_run(self):
 		print('')
 		self.logger.info('--------------------------------------------------------')
-		self.logger.info('Ended: {}'.format(self._get_date_string()))
-
-	def _get_date_string(self, date=''):
-		if date == '':
-			now = datetime.now()
-		else:
-			now = date
-		str = '%02d/%02d/%04d %02d:%02d:%02d' \
-			% (now.month, now.day, now.year, now.hour, now.minute, now.second)
-		return str
+		self.logger.info('Ended: {}'.format(self._h.get_date_string_print()))
 
 	def _get_server_name(self):
 		return uname()[1]
@@ -133,7 +126,7 @@ class Cli(object):
 		self.logger.info('  {}: {}'.format(list_type, str))
 
 	def _setup(self):
-		copyright = 'Copyright (C) 2017-2018  OnyxFire, Inc. <https://onyxfireinc.com>'
+		copyright = 'Copyright (C) 2017-2020  OnyxFire, Inc. <https://onyxfireinc.com>'
 		program_title = '{} {}'.format(self.program_name, self.program_version)
 		written_by = 'Written by: Lance Fogle (@lancefogle)'
 
@@ -154,7 +147,7 @@ class Cli(object):
 		)
 		child_parser.set_defaults(**options)
 		child_parser.add_argument('-d', '--backup-dir', metavar='PATH',
-			help='Backups directory (Default: <OnyxBackupVM Path>/exports)')
+			help='Backups directory (Default: <' + self.program_name + ' Path>/exports)')
 		child_parser.add_argument('-p', '--pool-backup', action='store_true', help='Backup Pool DB')
 		child_parser.add_argument('-H', '--host-backup', action='store_true', help='Backup Hosts in Pool (dom0)')
 		child_parser.add_argument('-C', '--compress', action='store_true',

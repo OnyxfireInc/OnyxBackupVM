@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 # part of OnyxBackupVM
-# Copyright (c) 2017-2018 OnyxFire, Inc.
+# Copyright (c) 2017-2020 OnyxFire, Inc.
 	
 # The above copyright notice and this permission notice shall be included in all
 # copies or substantial portions of the Software.
@@ -155,7 +155,7 @@ class Configurator(object):
 				},
 				"detailed": {
 					"format": "%(asctime)s - %(levelname)s: %(message)s [ %(module)s:%(funcName)s():%(lineno)s ]",
-					"datefmt": "%m/%d/%Y %I:%M:%S %p"
+					"datefmt": "%Y-%m-%d %H:%M:%S"
 				}
 			},
 			"handlers": {

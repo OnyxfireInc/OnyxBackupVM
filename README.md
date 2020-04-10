@@ -3,7 +3,7 @@ Citrix Hypervisor/XCP-ng VM Backup
 
 ```
 OnyxBackupVM
-Copyright (c) 2017-2018 OnyxFire, Inc.
+Copyright (c) 2017-2020 OnyxFire, Inc.
 	
 The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
