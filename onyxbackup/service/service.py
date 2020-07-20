@@ -380,7 +380,7 @@ class XenApiService(object):
             self.logger.debug('(i) Sending email report to {}'.format(smtp_to))
             s.sendmail(smtp_from, [smtp_to], msg.as_string())
             s.quit()
-        except SMTPException as e:
+        except smtplib.SMTPException as e:
             self.logger.error('(!) Email report failed to send: {}'.format(str(e)))
 
     # Private Functions
