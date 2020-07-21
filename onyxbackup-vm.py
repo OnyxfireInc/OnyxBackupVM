@@ -162,11 +162,11 @@ class Cli(object):
 			help='VDI export format (vdi-exports only, Default: raw)')
 		child_parser.add_argument('--preview', action='store_true', help='Preview resulting config and exit')
 		child_parser.add_argument('-e', '--vm-export', action='append', dest='vm_exports', metavar='STRING',
-			help='Appends VM name or Regex for vm-export to existing list (unless specified after -o option) (Default: ".*") NOTE: Specify multiple times for multiple values')
+			help='Appends VM name or Regex for vm-export to existing list (unless specified after -o option) (Default: ".*") NOTE: Specify multiple times for multiple values')
 		child_parser.add_argument('-E', '--vdi-export', action='append', dest='vdi_exports', metavar='STRING',
-			help='Appends VM name or Regex for vdi-export to existing list (unless specified after -ov option) (Default: None) NOTE: Specify multiple times for multiple values')
+			help='Appends VM name or Regex for vdi-export to existing list (unless specified after -ov option) (Default: None) NOTE: Specify multiple times for multiple values')
 		child_parser.add_argument('-x', '--exclude', action='append', dest='excludes', metavar='STRING',
-			help='Appends VM name or Regex for exclusion to existing list (unless specified after -oe option) (Default: None) NOTE: Specify multiple times for multiple values')
+			help='Appends VM name or Regex for exclusion to existing list (unless specified after -oe option) (Default: None) NOTE: Specify multiple times for multiple values')
 
 		final_args = vars(child_parser.parse_args(remaining_argv))
 		options.update(final_args)
