@@ -988,7 +988,11 @@ class XenApiService(object):
                     self.logger.warning('(!) No matching VMs found for {} in {}'.format(value, type))
                 elif found_match and type == 'excludes':
                     for vm in validated_list:
-                        sanitized_vms.remove(vm)
+                        if vm in sanitized_vms:
+                            self.logger.debug('(i) --> Removing VM from sanitized list as it has been excluded: {}'.format(vm))
+                            sanitized_vms.remove(vm)
+                        else:
+                            self.logger.debug('(i) --> VM no longer in santized list to remove: {}'.format(vm))
 
                 self.config[type] = sorted(validated_list, key=str.lower)
 
