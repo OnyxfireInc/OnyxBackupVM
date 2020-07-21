@@ -62,7 +62,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #### Basic usage:
 
-usage: onyxbackup-vm.py [-h] [-v] [-l LEVEL] [-c FILE] [-o] [-ov] [-d PATH]
+usage: onyxbackup-vm.py [-h] [-v] [-l LEVEL] [-c FILE] [-o] [-ov] [-oe] [-d PATH]
                         [-p] [-H] [-C] [-F FORMAT] [--preview] [-e STRING]
                         [-E STRING] [-x STRING]
 
@@ -79,6 +79,9 @@ optional arguments:
 &ensp;-ov, --override-vdi-exports  
 &emsp;Override vdi_exports list with command-line values  
 &emsp;NOTE: Must be specified before any -E options  
+&ensp;-oe, --override-excludes  
+&emsp;Override excludes list with command-line values  
+&emsp;NOTE: Must be specified before any -x options  
 &ensp;-d PATH, --backup-dir PATH  
 &emsp;Backups directory (Default: \<OnyxBackupVMPath\>/exports)  
 &ensp;-p, --pool-backup     Backup Pool DB  
