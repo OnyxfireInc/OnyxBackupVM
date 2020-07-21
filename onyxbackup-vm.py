@@ -146,6 +146,12 @@ class Cli(object):
 		  formatter_class=argparse.RawDescriptionHelpFormatter
 		)
 		child_parser.set_defaults(**options)
+		child_parser.add_argument('-o', '--override-exports', action='store_const', dest='vm_exports',
+					  help='Override vm_exports list with command-line values NOTE: Must be specified before any -e options', const=[])
+                child_parser.add_argument('-ov', '--override-vdi-exports', action='store_const', dest='vdi_exports',
+					  help='Override vdi_exports list with command-line values NOTE: Must be specified before any -E options', const=[])
+		child_parser.add_argument('-oe', '--override-excludes', action='store_const', dest='excludes',
+					  help='Override excludes list with command-line values NOTE: Must be specified before any -x options', const=[])
 		child_parser.add_argument('-d', '--backup-dir', metavar='PATH',
 			help='Backups directory (Default: <' + self.program_name + ' Path>/exports)')
 		child_parser.add_argument('-p', '--pool-backup', action='store_true', help='Backup Pool DB')
@@ -156,11 +162,11 @@ class Cli(object):
 			help='VDI export format (vdi-exports only, Default: raw)')
 		child_parser.add_argument('--preview', action='store_true', help='Preview resulting config and exit')
 		child_parser.add_argument('-e', '--vm-export', action='append', dest='vm_exports', metavar='STRING',
-			help='VM name or Regex for vm-export (Default: ".*") NOTE: Specify multiple times for multiple values')
+			help='Appends VM name or Regex for vm-export to existing list (unless specified after -o option) (Default: ".*") NOTE: Specify multiple times for multiple values')
 		child_parser.add_argument('-E', '--vdi-export', action='append', dest='vdi_exports', metavar='STRING',
-			help='VM name or Regex for vdi-export (Default: None) NOTE: Specify multiple times for multiple values')
+			help='Appends VM name or Regex for vdi-export to existing list (unless specified after -ov option) (Default: None) NOTE: Specify multiple times for multiple values')
 		child_parser.add_argument('-x', '--exclude', action='append', dest='excludes', metavar='STRING',
-			help='VM name or Regex to exclude (Default: None) NOTE: Specify multiple times for multiple values')
+			help='Appends VM name or Regex for exclusion to existing list (unless specified after -oe option) (Default: None) NOTE: Specify multiple times for multiple values')
 
 		final_args = vars(child_parser.parse_args(remaining_argv))
 		options.update(final_args)
