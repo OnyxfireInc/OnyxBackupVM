@@ -67,35 +67,35 @@ usage: onyxbackup-vm.py [-h] [-v] [-l LEVEL] [-c FILE] [-o] [-ov] [-d PATH]
                         [-E STRING] [-x STRING]
 
 optional arguments:  
-  -h, --help            show this help message and exit  
-  -v, --version         show program's version number and exit  
-  -l LEVEL, --log-level LEVEL  
-                        Log Level (Default: info)  
-  -c FILE, --config FILE  
-                        Config file for runtime overrides  
-  -o, --override-exports  
-                        Override vm_exports list with command-line values
-                        NOTE: Must be specified before any -e options  
-  -ov, --override-vdi-exports  
-                        Override vdi_exports list with command-line values
-                        NOTE: Must be specified before any -E options  
-  -d PATH, --backup-dir PATH  
-                        Backups directory (Default: \<OnyxBackupVMPath\>/exports)  
-  -p, --pool-backup     Backup Pool DB  
-  -H, --host-backup     Backup Hosts in Pool (dom0)  
-  -C, --compress        Compress on export (vm-exports only)  
-  -F FORMAT, --format FORMAT  
-                        VDI export format (vdi-exports only, Default: raw)  
-  --preview             Preview resulting config and exit  
-  -e STRING, --vm-export STRING  
-                        Appends VM name or Regex for vm-export to existing list (unless specified after -o option) (Default: ".*") NOTE:
-                        Specify multiple times for multiple values  
-  -E STRING, --vdi-export STRING  
-                        Appends VM name or Regex for vdi-export  to existing list (unless specified after -ov option) (Default: None) NOTE:
-                        Specify multiple times for multiple values  
-  -x STRING, --exclude STRING  
-                        VM name or Regex to exclude (Default: None) NOTE:
-                        Specify multiple times for multiple values  
+&nbsp;&nbsp;-h, --help            show this help message and exit  
+&nbsp;&nbsp;-v, --version         show program's version number and exit  
+&nbsp;&nbsp;-l LEVEL, --log-level LEVEL  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Log Level (Default: info)  
+&nbsp;&nbsp;-c FILE, --config FILE  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Config file for runtime overrides  
+&nbsp;&nbsp;-o, --override-exports  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Override vm_exports list with command-line values  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NOTE: Must be specified before any -e options  
+&nbsp;&nbsp;-ov, --override-vdi-exports  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Override vdi_exports list with command-line values  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NOTE: Must be specified before any -E options  
+&nbsp;&nbsp;-d PATH, --backup-dir PATH  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Backups directory (Default: \<OnyxBackupVMPath\>/exports)  
+&nbsp;&nbsp;-p, --pool-backup     Backup Pool DB  
+&nbsp;&nbsp;-H, --host-backup     Backup Hosts in Pool (dom0)  
+&nbsp;&nbsp;-C, --compress        Compress on export (vm-exports only)  
+&nbsp;&nbsp;-F FORMAT, --format FORMAT  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;VDI export format (vdi-exports only, Default: raw)  
+&nbsp;&nbsp;--preview             Preview resulting config and exit  
+&nbsp;&nbsp;-e STRING, --vm-export STRING  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Appends VM name or Regex for vm-export to existing list (unless specified after -o option) (Default: ".*")  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NOTE: Specify multiple times for multiple values  
+&nbsp;&nbsp;-E STRING, --vdi-export STRING  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Appends VM name or Regex for vdi-export  to existing list (unless specified after -ov option) (Default: None)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NOTE: Specify multiple times for multiple values  
+&nbsp;&nbsp;-x STRING, --exclude STRING  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;VM name or Regex to exclude (Default: None)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NOTE: Specify multiple times for multiple values  
 
 #### Some usage examples:
 
