@@ -67,35 +67,35 @@ usage: onyxbackup-vm.py [-h] [-v] [-l LEVEL] [-c FILE] [-o] [-ov] [-d PATH]
                         [-E STRING] [-x STRING]
 
 optional arguments:  
-&nbsp;&nbsp;-h, --help            show this help message and exit  
-&nbsp;&nbsp;-v, --version         show program's version number and exit  
-&nbsp;&nbsp;-l LEVEL, --log-level LEVEL  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Log Level (Default: info)  
-&nbsp;&nbsp;-c FILE, --config FILE  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Config file for runtime overrides  
-&nbsp;&nbsp;-o, --override-exports  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Override vm_exports list with command-line values  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NOTE: Must be specified before any -e options  
-&nbsp;&nbsp;-ov, --override-vdi-exports  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Override vdi_exports list with command-line values  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NOTE: Must be specified before any -E options  
-&nbsp;&nbsp;-d PATH, --backup-dir PATH  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Backups directory (Default: \<OnyxBackupVMPath\>/exports)  
-&nbsp;&nbsp;-p, --pool-backup     Backup Pool DB  
-&nbsp;&nbsp;-H, --host-backup     Backup Hosts in Pool (dom0)  
-&nbsp;&nbsp;-C, --compress        Compress on export (vm-exports only)  
-&nbsp;&nbsp;-F FORMAT, --format FORMAT  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;VDI export format (vdi-exports only, Default: raw)  
-&nbsp;&nbsp;--preview             Preview resulting config and exit  
-&nbsp;&nbsp;-e STRING, --vm-export STRING  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Appends VM name or Regex for vm-export to existing list (unless specified after -o option) (Default: ".*")  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NOTE: Specify multiple times for multiple values  
-&nbsp;&nbsp;-E STRING, --vdi-export STRING  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Appends VM name or Regex for vdi-export  to existing list (unless specified after -ov option) (Default: None)  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NOTE: Specify multiple times for multiple values  
-&nbsp;&nbsp;-x STRING, --exclude STRING  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;VM name or Regex to exclude (Default: None)  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NOTE: Specify multiple times for multiple values  
+&ensp;-h, --help            show this help message and exit  
+&ensp;-v, --version         show program's version number and exit  
+&ensp;-l LEVEL, --log-level LEVEL  
+&emsp;Log Level (Default: info)  
+&ensp;-c FILE, --config FILE  
+&emsp;Config file for runtime overrides  
+&ensp;-o, --override-exports  
+&emsp;Override vm_exports list with command-line values  
+&emsp;NOTE: Must be specified before any -e options  
+&ensp;-ov, --override-vdi-exports  
+&emsp;Override vdi_exports list with command-line values  
+&emsp;NOTE: Must be specified before any -E options  
+&ensp;-d PATH, --backup-dir PATH  
+&emsp;Backups directory (Default: \<OnyxBackupVMPath\>/exports)  
+&ensp;-p, --pool-backup     Backup Pool DB  
+&ensp;-H, --host-backup     Backup Hosts in Pool (dom0)  
+&ensp;-C, --compress        Compress on export (vm-exports only)  
+&ensp;-F FORMAT, --format FORMAT  
+&emsp;VDI export format (vdi-exports only, Default: raw)  
+&ensp;--preview             Preview resulting config and exit  
+&ensp;-e STRING, --vm-export STRING  
+&emsp;Appends VM name or Regex for vm-export to existing list (unless specified after -o option) (Default: ".*")  
+&emsp;NOTE: Specify multiple times for multiple values  
+&ensp;-E STRING, --vdi-export STRING  
+&emsp;Appends VM name or Regex for vdi-export  to existing list (unless specified after -ov option) (Default: None)  
+&emsp;NOTE: Specify multiple times for multiple values  
+&ensp;-x STRING, --exclude STRING  
+&emsp;VM name or Regex to exclude (Default: None)  
+&emsp;NOTE: Specify multiple times for multiple values  
 
 #### Some usage examples:
 
