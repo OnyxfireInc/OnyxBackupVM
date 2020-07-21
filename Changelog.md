@@ -6,7 +6,13 @@
   - Convert remaining functions to XAPI calls only
   - Automatically use remote authentication if not running on CH/xcp-ng host
 
-### v1.3.1 - 10 Apr 2020
+### v1.4.0 - 21 July 2020
+  #### Features and Enhancements
+  - Added new options for overriding the configured VMs in onyxbackup.cfg instead of appending (resolves #21)
+  #### Bugs
+  - Fixed catching of SMTP exceptions when trying to send report email (resolves #20)
+
+### v1.3.1 - 10 April 2020
   #### Features and Enhancements
   - Changed logging of date and time to ISO 8601 format #18
 
