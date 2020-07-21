@@ -106,7 +106,7 @@ onyxbackup-vm.py [-h] [-v] [-l LEVEL] [-c FILE] [-o] [-ov] [-oe] [-d PATH] [-p]
 	Appends VM name or Regex for vdi-export  to existing list (unless specified after -ov option) (Default: None)
 	NOTE: Specify multiple times for multiple values
 -x STRING, --exclude STRING
-	VM name or Regex to exclude (Default: None)
+	Appends VM name or Regex for exclusion to existing list (unless specified after -oe option) (Default: None)
 	NOTE: Specify multiple times for multiple values
 ```
     
