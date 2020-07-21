@@ -33,7 +33,7 @@ class Cli(object):
 	def __init__(self):
 		self.logger = getLogger('onyxbackup')
 		self.program_name = 'OnyxBackupVM'
-		self.program_version = 'v1.3.1'
+		self.program_version = 'v1.4.0'
 		self.config = self._setup()
 		self._h = util.Helper()
 
